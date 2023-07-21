@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor | Animado</title>
+
+    <style>
+        @keyframes rotateCursor {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotateCursorReverse {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        @keyframes expandCursor {
+            0% {
+                opacity: 0;
+                border-radius: 50%;
+            }
+
+            50% {
+                opacity: 1;
+                border-radius: 25%;
+            }
+
+            100% {
+                opacity: 0;
+                border-radius: 0;
+            }
+
+        }
+
+        * {
+            cursor: none;
+        }
+
+        body {
+            background: #000111;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .cursor {
+            width: 50px;
+            height: 50px;
+            display: block;
+            border-radius: 25%;
+            position: absolute;
+            background: rgb(144, 0, 255);
+            transition: all 0.5s ease-out;
+        }
+
+        .cursor::before {
+            content: '';
+            width: 93px;
+            height: 93px;
+            display: block;
+            position: absolute;
+            border: 2px solid #fff;
+            border-radius: 25%;
+            background: transparent;
+            top: -22px;
+            left: -22px;
+            opacity: 0.8;
+            animation: rotateCursor 2s infinite linear;
+        }
+
+        .cursor::after {
+            content: '';
+            width: 46px;
+            height: 46px;
+            display: block;
+            border: 3px solid rgb(242, 0, 255);
+            border-radius: 25%;
+            position: absolute;
+        }
+
+        .cursor-expand {
+            &:after {
+                animation: expandCursor 0.4s ease-out forwards;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="cursor"></div>
+    
+    <script>
+        const cursor = document.querySelector('.cursor')
+
+        document.addEventListener('mousemove', (m) => {
+
+        let posX = m.pageX - 22
+        let posY = m.pageY - 22
+
+        cursor.style.left = posX + 'px';
+        cursor.style.top = posY + 'px';
+
+        document.addEventListener('click', () => {
+            cursor.style.scale = '.8'
+            cursor.style.backgroundColor = 'red'
+
+            setTimeout(() => {
+                cursor.style.scale = '1'
+                cursor.style.backgroundColor = 'rgb(144, 0, 255)'
+            }, 600)
+        })
+    })
+
+    </script>
+</body>
+</html>
